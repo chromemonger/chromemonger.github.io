@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>meincraft!</title>
+
+  <style>
+    @font-face {
+      font-family: 'helvb08';
+      src: url('https://cdn.flipper.net/helvb08.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: 'helvb08', monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      animation:
+        bgFlash 0.015s infinite linear,
+        screenShake 0.04s infinite linear;
+    }
+
+    .text {
+      position: relative;
+      font-size: clamp(2.2rem, 12vw, 6rem);
+      letter-spacing: 0.18em;
+      text-align: center;
+      animation:
+        textFlash 0.015s infinite linear,
+        zoomPulse 0.025s infinite alternate,
+        skewJitter 0.03s infinite linear,
+        rotateJitter 0.05s infinite linear;
+    }
+
+    .text::before,
+    .text::after {
+      content: "info grabbed.";
+      position: absolute;
+      inset: 0;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    .text::before {
+      color: cyan;
+      animation: glitchLeft 0.02s infinite linear;
+    }
+
+    .text::after {
+      color: magenta;
+      animation: glitchRight 0.018s infinite linear;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.06),
+        rgba(255,255,255,0.06) 1px,
+        rgba(0,0,0,0.12) 2px
+      );
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center,
+        rgba(255,255,255,0.18),
+        transparent 60%);
+      animation: vignettePulse 0.04s infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes textFlash {
+      0%   { color: red;     text-shadow: 0 0 25px red, 0 0 120px red; }
+      20%  { color: lime;    text-shadow: 0 0 25px lime, 0 0 120px lime; }
+      40%  { color: cyan;    text-shadow: 0 0 25px cyan, 0 0 120px cyan; }
+      60%  { color: yellow;  text-shadow: 0 0 25px yellow, 0 0 120px yellow; }
+      80%  { color: magenta; text-shadow: 0 0 25px magenta, 0 0 120px magenta; }
+      100% { color: red; }
+    }
+
+    @keyframes bgFlash {
+      0%   { background: cyan; }
+      20%  { background: red; }
+      40%  { background: magenta; }
+      60%  { background: lime; }
+      80%  { background: blue; }
+      100% { background: yellow; }
+    }
+
+    @keyframes zoomPulse {
+      from { transform: scale(0.6); }
+      to   { transform: scale(2); }
+    }
+
+    @keyframes screenShake {
+      0%   { transform: translate(0,0); }
+      25%  { transform: translate(-10px, 6px); }
+      50%  { transform: translate(10px, -6px); }
+      75%  { transform: translate(-8px, -10px); }
+      100% { transform: translate(8px, 10px); }
+    }
+
+    @keyframes skewJitter {
+      0%   { transform: skew(0deg); }
+      50%  { transform: skew(12deg); }
+      100% { transform: skew(-12deg); }
+    }
+
+    @keyframes rotateJitter {
+      0%   { transform: rotate(0deg); }
+      50%  { transform: rotate(6deg); }
+      100% { transform: rotate(-6deg); }
+    }
+
+    @keyframes glitchLeft {
+      0%   { transform: translate(-10px, -6px); }
+      50%  { transform: translate(10px, 6px); }
+      100% { transform: translate(-10px, 6px); }
+    }
+
+    @keyframes glitchRight {
+      0%   { transform: translate(10px, 6px); }
+      50%  { transform: translate(-10px, -6px); }
+      100% { transform: translate(10px, -6px); }
+    }
+
+    @keyframes vignettePulse {
+      from { opacity: 0.25; }
+      to   { opacity: 0.65; }
+    }
+
+    .invert {
+      filter: invert(1) hue-rotate(180deg) contrast(220%);
+    }
+  </style>
+</head>
+<body>
+  <div class="text">info grabbed.</div>
+
+  <script>
+    setInterval(() => {
+      document.body.classList.toggle('invert');
+    }, 18);
+
+    setInterval(() => {
+      document.body.style.filter =
+        `hue-rotate(${Math.random()*360}deg) saturate(${150 + Math.random()*250}%)`;
+    }, 22);
+  </script>
+</body>
+</html>
+
